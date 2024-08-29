@@ -27,7 +27,7 @@ void setup() {
 }
 
 void loop() {
-  if(Serial1.available() > 0){ // Checks whether data is comming from the serial port
+  if(1){//Serial1.available() > 0){ // Checks whether data is comming from the serial port
     digitalWrite(LEDPIN, HIGH);
     
     float h = dht.readHumidity();
