@@ -1,2 +1,3 @@
 # IFN649_2024
-NEW PROJECT
+IFN649 2024 S2
+Benjamin Barrera
