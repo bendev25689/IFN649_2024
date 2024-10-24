@@ -6,7 +6,7 @@
 
 #define LEDPIN 11
 
-#define SENSEID 3
+#define SENSEID 3 //sensor id, change before uploading to each sensor
 DHT dht(DHTPIN, DHTTYPE);
 
 // Teensy 5V <--> HC-05 Vcc
@@ -28,35 +28,38 @@ void setup() {
 }
 
 void loop() {
-  if(1){//Serial1.available() > 0){ // Checks whether data is comming from the serial port
-    digitalWrite(LEDPIN, HIGH);
-    
-    float h = dht.readHumidity();
-    float t = dht.readTemperature();
-    float hic = dht.computeHeatIndex(t, h, false);  
 
-    Serial.print(F("["));
-    Serial.print(SENSEID);
-    Serial.print(",");
-    Serial.print(h); //humidity
-    Serial.print(F(","));
-    Serial.print(t); //temperature C
-    Serial.print(F(","));
-    Serial.print(hic); //heat index C
-    Serial.println(F("]"));
+  digitalWrite(LEDPIN, HIGH); //LED blinks to indicate activity
+  
+  //read from sensor
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+  float hic = dht.computeHeatIndex(t, h, false);  
 
-    Serial1.print(F("["));
-    Serial1.print(SENSEID);
-    Serial1.print(",");
-    Serial1.print(h); //humidity
-    Serial1.print(F(","));
-    Serial1.print(t); //temperature C
-    Serial1.print(F(","));
-    Serial1.print(hic); //heat index C
-    Serial1.println(F("]"));
-    
-    delay(1000);
-    digitalWrite(LEDPIN, LOW);
-    delay(1000);
- }
+  //write to usb serial
+  Serial.print(F("["));
+  Serial.print(SENSEID);
+  Serial.print(",");
+  Serial.print(h); //humidity
+  Serial.print(F(","));
+  Serial.print(t); //temperature C
+  Serial.print(F(","));
+  Serial.print(hic); //heat index C
+  Serial.println(F("]"));
+
+  //write to bluetooth serial
+  Serial1.print(F("["));
+  Serial1.print(SENSEID);
+  Serial1.print(",");
+  Serial1.print(h); //humidity
+  Serial1.print(F(","));
+  Serial1.print(t); //temperature C
+  Serial1.print(F(","));
+  Serial1.print(hic); //heat index C
+  Serial1.println(F("]"));
+  
+  delay(1000);
+  digitalWrite(LEDPIN, LOW);
+  delay(1000);
+ 
 }
